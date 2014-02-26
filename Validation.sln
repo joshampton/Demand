@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validation.Core", "Validation.Core\Validation.Core.csproj", "{80A138BE-CD6E-44D6-A9FF-684E96485C39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validation.Scratch", "Validation.Scratch\Validation.Scratch.csproj", "{940CF6D2-A801-4F71-872A-5F7F9AF5D21F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80A138BE-CD6E-44D6-A9FF-684E96485C39}.Debug|x86.ActiveCfg = Debug|x86
+		{80A138BE-CD6E-44D6-A9FF-684E96485C39}.Debug|x86.Build.0 = Debug|x86
+		{80A138BE-CD6E-44D6-A9FF-684E96485C39}.Release|x86.ActiveCfg = Release|x86
+		{80A138BE-CD6E-44D6-A9FF-684E96485C39}.Release|x86.Build.0 = Release|x86
+		{940CF6D2-A801-4F71-872A-5F7F9AF5D21F}.Debug|x86.ActiveCfg = Debug|x86
+		{940CF6D2-A801-4F71-872A-5F7F9AF5D21F}.Debug|x86.Build.0 = Debug|x86
+		{940CF6D2-A801-4F71-872A-5F7F9AF5D21F}.Release|x86.ActiveCfg = Release|x86
+		{940CF6D2-A801-4F71-872A-5F7F9AF5D21F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
