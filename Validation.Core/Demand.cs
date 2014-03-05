@@ -9,6 +9,9 @@ namespace Validation.Core
     {
         public static Target<TargetType> That<TargetType>(string name, TargetType value)
         {
+            Demand.That("name", name)
+                .Passes(s => !string.IsNullOrEmpty(name));
+
             return new Target<TargetType>(name, value);
         }
     }

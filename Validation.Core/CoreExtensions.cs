@@ -9,6 +9,12 @@ namespace Validation.Core
     {
         public static Target<TargetType> Passes<TargetType>(this Target<TargetType> target, Predicate<TargetType> validation, string message = null)
         {
+            Demand.That("target", target)
+                .Passes(t => t != null);
+
+            Demand.That("validation", validation)
+                .Passes(v => v != null);
+
             bool pass = false;
             Exception exception = null;
 
@@ -23,13 +29,19 @@ namespace Validation.Core
             }
 
             if (!pass)
-                throw new ValidationFailedException(null, exception);
+                throw new ValidationFailedException(message, exception);
 
             return target;
         }
 
         public static Target<TargetType> Fails<TargetType>(this Target<TargetType> target, Predicate<TargetType> validation, string message = null)
         {
+            Demand.That("target", target)
+                .Passes(t => t != null);
+
+            Demand.That("validation", validation)
+                .Passes(v => v != null);
+
             bool pass = false;
             Exception exception = null;
 
@@ -44,7 +56,7 @@ namespace Validation.Core
             }
 
             if (!pass)
-                throw new ValidationFailedException(null, exception);
+                throw new ValidationFailedException(message, exception);
 
             return target;
         }

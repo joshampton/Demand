@@ -19,6 +19,9 @@ namespace Validation.Core
 
         public Target(string name, object value)
         {
+            Demand.That("name", name)
+                .Passes(s => !string.IsNullOrEmpty(s));
+
             this.name = name;
             this.value = value;
         }
