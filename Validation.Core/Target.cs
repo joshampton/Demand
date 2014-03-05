@@ -14,25 +14,13 @@ namespace Validation.Core
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private readonly object value;
 
-        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly IList<ValidationResult> results;
-
         public string Name { get { return this.name; } }
         public object Value { get { return this.value; } }
-
-        //TODO: write separate enumerator, this doesn't protect the list
-        public IEnumerable<ValidationResult> Results { get { return this.results; } }
 
         public Target(string name, object value)
         {
             this.name = name;
             this.value = value;
-            this.results = new List<ValidationResult>();
-        }
-
-        public void AddValidationResult(ValidationResult result)
-        {
-            this.results.Add(result);
         }
     }
 
@@ -58,7 +46,6 @@ namespace Validation.Core
 
         public string Name { get { return target.Name; } }
         public object Value { get { return target.Value; } }
-        public IEnumerable<ValidationResult> Results { get { return target.Results; } }
 
         public TargetDebuggerProxy(Target target)
         {

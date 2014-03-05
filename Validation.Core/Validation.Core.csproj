@@ -38,11 +38,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Configuration.cs" />
     <Compile Include="CoreExtensions.cs" />
     <Compile Include="Demand.cs" />
-    <Compile Include="ValidationResult.cs" />
     <Compile Include="Target.cs" />
+    <Compile Include="ValidationFailedException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
