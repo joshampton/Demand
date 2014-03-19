@@ -6,6 +6,7 @@ using System.Diagnostics;
 
 namespace Validation.Core
 {
+    [DebuggerTypeProxy(typeof(TargetDebuggerProxy))]
     public abstract class Target
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -19,8 +20,8 @@ namespace Validation.Core
 
         public Target(string name, object value)
         {
-            Demand.That("name", name)
-                .Passes(s => !string.IsNullOrEmpty(s));
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("name cannot be null or empty", "name");
 
             this.name = name;
             this.value = value;
@@ -52,6 +53,9 @@ namespace Validation.Core
 
         public TargetDebuggerProxy(Target target)
         {
+            if (target == null)
+                throw new ArgumentNullException("target");
+
             this.target = target;
         }
     }

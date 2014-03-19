@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace Validation.Core
 {
     public static class CoreExtensions
     {
-        public static Target<TargetType> Passes<TargetType>(this Target<TargetType> target, Predicate<TargetType> validation, string message = null)
+        public static Target<TargetType> Passes<TargetType>(this Target<TargetType> target, Expression<Predicate<TargetType>> validation, string message = null)
         {
-            Demand.That("target", target)
-                .Passes(t => t != null);
+            if (target == null)
+                throw new ArgumentNullException("target");
 
-            Demand.That("validation", validation)
-                .Passes(v => v != null);
+            if (validation == null)
+                throw new ArgumentNullException("validation");
 
             bool pass = false;
             Exception exception = null;
 
             try
             {
-                pass = validation(target.TypeSafeValue);
+                var compiledValidation = validation.Compile();
+                pass = compiledValidation(target.TypeSafeValue);
             }
             catch(Exception e)
             {
@@ -34,20 +36,21 @@ namespace Validation.Core
             return target;
         }
 
-        public static Target<TargetType> Fails<TargetType>(this Target<TargetType> target, Predicate<TargetType> validation, string message = null)
+        public static Target<TargetType> Fails<TargetType>(this Target<TargetType> target, Expression<Predicate<TargetType>> validation, string message = null)
         {
-            Demand.That("target", target)
-                .Passes(t => t != null);
+            if (target == null)
+                throw new ArgumentNullException("target");
 
-            Demand.That("validation", validation)
-                .Passes(v => v != null);
+            if (validation == null)
+                throw new ArgumentNullException("validation");
 
             bool pass = false;
             Exception exception = null;
 
             try
             {
-                pass = !validation(target.TypeSafeValue);
+                var compiledValidation = validation.Compile();
+                pass = !compiledValidation(target.TypeSafeValue);
             }
             catch (Exception e)
             {
