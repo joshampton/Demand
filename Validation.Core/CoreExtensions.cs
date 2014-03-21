@@ -31,7 +31,7 @@ namespace Validation.Core
             }
 
             if (!pass)
-                throw new ValidationFailedException(message, exception);
+                throw new ValidationFailedException(target.Name, "asdf", null, exception);
 
             return target;
         }
@@ -59,7 +59,7 @@ namespace Validation.Core
             }
 
             if (!pass)
-                throw new ValidationFailedException(message, exception);
+                throw new ValidationFailedException(target.Name, "asdf", null, exception);
 
             return target;
         }

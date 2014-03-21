@@ -29,21 +29,6 @@ namespace Validation.Scratch
     {
         static void Main(string[] args)
         {
-            Dog d = new Dog { Sound = "Woof" };
-
-            if (d == null)
-                throw new ValidationFailedException();
-
-            if (string.IsNullOrEmpty(d.Sound))
-                throw new ValidationFailedException();
-
-            if (d.Sound != "Woof")
-                throw new ValidationFailedException();
-
-            Demand.That(() => d)
-                .Passes(x => x != null)
-                .Passes(x => !string.IsNullOrEmpty(x.Sound))
-                .Passes(x => x.Sound == "Woof");
         }
     } 
 }

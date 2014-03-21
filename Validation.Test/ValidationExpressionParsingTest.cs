@@ -88,5 +88,18 @@ namespace Validation.Test
 
             Assert.AreEqual("dog.GenericMethod<String>()", visitor.Expression);
         }
+
+        [TestMethod]
+        public void SimpleConstant()
+        {
+            var dog = new ASample();
+
+            Expression<Predicate<ASample>> expr = d => false;
+
+            var visitor = new ValidationExpressionVisitor();
+            visitor.Visit(expr);
+
+            Assert.AreEqual("false", visitor.Expression);
+        }
     }
 }

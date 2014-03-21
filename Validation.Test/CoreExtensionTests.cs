@@ -62,7 +62,16 @@ namespace Validation.Test
             var target = new Target<string>("name", "value");
             Expression<Predicate<string>> expr = s => false;
 
-            CoreExtensions.Passes(target, expr);
+            try
+            {
+                CoreExtensions.Passes(target, expr);
+            }
+            catch (ValidationFailedException e)
+            {
+                Assert.AreEqual(target.Name, e.TargetName);
+                Assert.AreEqual("false", e.Validation);
+                throw;
+            }
         }
 
         [TestMethod]
@@ -90,6 +99,7 @@ namespace Validation.Test
             catch (ValidationFailedException e)
             {
                 Assert.IsNotNull(e.InnerException);
+                Assert.AreEqual(e.TargetName, "name");
                 Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
                 throw;
             }
@@ -110,8 +120,16 @@ namespace Validation.Test
         {
             var target = new Target<string>("name", "value");
             Expression<Predicate<string>> expr = s => true;
-
-            CoreExtensions.Fails(target, expr);
+            try
+            {
+                CoreExtensions.Fails(target, expr);
+            }
+            catch (ValidationFailedException e)
+            {
+                Assert.AreEqual(target.Name, e.TargetName);
+                Assert.AreEqual("false", e.Validation);
+                throw;
+            }
         }
 
         [TestMethod]
@@ -139,6 +157,7 @@ namespace Validation.Test
             catch (ValidationFailedException e)
             {
                 Assert.IsNotNull(e.InnerException);
+                Assert.AreEqual(e.TargetName, "name");
                 Assert.AreEqual(typeof(Exception), e.InnerException.GetType());
                 throw;
             }
