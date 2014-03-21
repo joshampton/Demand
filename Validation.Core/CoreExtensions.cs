@@ -18,6 +18,7 @@ namespace Validation.Core
 
             bool pass = false;
             Exception exception = null;
+            string validationText = validation.Visit();
 
             try
             {
@@ -31,7 +32,7 @@ namespace Validation.Core
             }
 
             if (!pass)
-                throw new ValidationFailedException(target.Name, "asdf", null, exception);
+                throw new ValidationFailedException(target.Name, validationText, null, exception);
 
             return target;
         }
@@ -46,6 +47,7 @@ namespace Validation.Core
 
             bool pass = false;
             Exception exception = null;
+            string validationText = validation.Visit();
 
             try
             {
@@ -59,9 +61,20 @@ namespace Validation.Core
             }
 
             if (!pass)
-                throw new ValidationFailedException(target.Name, "asdf", null, exception);
+                throw new ValidationFailedException(target.Name, validationText, null, exception);
 
             return target;
+        }
+
+        public static string Visit(this Expression target)
+        {
+            if (target == null)
+                throw new ArgumentNullException("target");
+
+            var visitor = new ValidationExpressionVisitor();
+            visitor.Visit(target);
+
+            return visitor.Expression;
         }
     }
 }

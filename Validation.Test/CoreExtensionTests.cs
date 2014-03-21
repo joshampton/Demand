@@ -69,7 +69,7 @@ namespace Validation.Test
             catch (ValidationFailedException e)
             {
                 Assert.AreEqual(target.Name, e.TargetName);
-                Assert.AreEqual("false", e.Validation);
+                Assert.AreEqual("False", e.Validation);
                 throw;
             }
         }
@@ -127,7 +127,7 @@ namespace Validation.Test
             catch (ValidationFailedException e)
             {
                 Assert.AreEqual(target.Name, e.TargetName);
-                Assert.AreEqual("false", e.Validation);
+                Assert.AreEqual("True", e.Validation);
                 throw;
             }
         }

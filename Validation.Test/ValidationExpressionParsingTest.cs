@@ -15,10 +15,10 @@ namespace Validation.Test
             var dog = new ASample();
 
             Expression<Func<BSample>> temp = () => dog.Thing;
-            var visitor = new ValidationExpressionVisitor();
-            visitor.Visit(temp);
 
-            Assert.AreEqual("dog.Thing", visitor.Expression);
+            string result = temp.Visit();
+
+            Assert.AreEqual("dog.Thing", result);
         }
 
         [TestMethod]
@@ -37,11 +37,22 @@ namespace Validation.Test
         {
             var dog = new ASample();
 
-            Expression<Func<string>> temp = () => dog.DoSomething("something");
-            var visitor = new ValidationExpressionVisitor();
-            visitor.Visit(temp);
+            Expression<Func<string>> temp = () => dog.DoSomething("argumentValue");
 
-            Assert.AreEqual("dog.DoSomething(String something)", visitor.Expression);
+            string result = temp.Visit();
+
+            Assert.AreEqual("dog.DoSomething(String something)", result);
+        }
+
+        [TestMethod]
+        public void ChainedMethod_Parameters()
+        {
+            var dog = new ASample();
+            Expression<Func<string>> temp = () => dog.DoSomething("argValue").Replace("a", "b");
+
+            string result = temp.Visit();
+
+            Assert.AreEqual("dog.DoSomething(String something).Replace(String oldValue, String newValue)", result);
         }
 
         [TestMethod]
@@ -60,10 +71,10 @@ namespace Validation.Test
         {
             var dog = new ASample { Thing = new BSample { Prop = 20f } };
             Expression<Func<float>> temp = () => dog.GetThing().Prop;
-            var visitor = new ValidationExpressionVisitor();
-            visitor.Visit(temp);
 
-            Assert.AreEqual("dog.GetThing().Prop", visitor.Expression);
+            string result = temp.Visit();
+
+            Assert.AreEqual("dog.GetThing().Prop", result);
         }
 
         [TestMethod]
@@ -83,10 +94,9 @@ namespace Validation.Test
             var dog = new ASample();
 
             Expression<Func<string>> temp = () => dog.GenericMethod<string>();
-            var visitor = new ValidationExpressionVisitor();
-            visitor.Visit(temp);
+            string result = temp.Visit();
 
-            Assert.AreEqual("dog.GenericMethod<String>()", visitor.Expression);
+            Assert.AreEqual("dog.GenericMethod<String>()", result);
         }
 
         [TestMethod]
@@ -96,10 +106,9 @@ namespace Validation.Test
 
             Expression<Predicate<ASample>> expr = d => false;
 
-            var visitor = new ValidationExpressionVisitor();
-            visitor.Visit(expr);
+            string result = expr.Visit();
 
-            Assert.AreEqual("false", visitor.Expression);
+            Assert.AreEqual("False", result);
         }
     }
 }

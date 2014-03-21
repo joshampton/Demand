@@ -10,6 +10,7 @@ namespace Validation.Core
     public sealed class ValidationExpressionVisitor : DynamicExpressionVisitor
     {
         private readonly Stack<string> members;
+        private readonly List<Expression> arguments;
 
         public string Expression
         {
@@ -22,6 +23,7 @@ namespace Validation.Core
         public ValidationExpressionVisitor()
         {
             this.members = new Stack<string>();
+            this.arguments = new List<Expression>();
         }
 
         public override Expression Visit(Expression node)
@@ -38,6 +40,8 @@ namespace Validation.Core
 
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
+            this.arguments.AddRange(node.Arguments);
+
             var parameters = node.Method.GetParameters()
                 .Select(p => string.Format("{0} {1}", p.ParameterType.Name, p.Name))
                 .ToArray();
@@ -53,6 +57,26 @@ namespace Validation.Core
             members.Push(string.Format("{0}{1}({2})", node.Method.Name, genericParamString, paramString));
 
             return base.VisitMethodCall(node);
+        }
+
+        protected override Expression VisitParameter(ParameterExpression node)
+        {
+            return base.VisitParameter(node);
+        }
+
+        protected override Expression VisitConstant(ConstantExpression node)
+        {
+            if (!node.Type.Name.Contains("<>") && !this.arguments.Contains(node))
+                members.Push(string.Format("{0}", node.Value));
+            return base.VisitConstant(node);
+        }
+
+        protected override Expression VisitLambda<T>(Expression<T> node)
+        {
+            if (node == null)
+                throw new ArgumentNullException("node");
+
+            return base.Visit(node.Body);
         }
     }
 }
