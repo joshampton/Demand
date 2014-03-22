@@ -15,19 +15,7 @@ namespace Validation.Core
         public string TargetName { get { return this.targetName; } }
         public string Validation { get { return this.validation; } }
 
-        public ValidationFailedException(string targetName, string validation)
-        {
-            if (string.IsNullOrEmpty(targetName))
-                throw new ArgumentException("targetName cannot be null or empty", "targetName");
-
-            if (string.IsNullOrEmpty(validation))
-                throw new ArgumentException("validation cannot be null or empty", "validation");
-
-            this.targetName = targetName;
-            this.validation = validation;
-        }
-
-        public ValidationFailedException(string targetName, string validation, Exception inner) : base(null, inner)
+        public ValidationFailedException(string targetName, string validation, Exception innerException = null) : base(null, innerException)
         {
             if (string.IsNullOrEmpty(targetName))
                 throw new ArgumentException("targetName cannot be null or empty", "targetName");
