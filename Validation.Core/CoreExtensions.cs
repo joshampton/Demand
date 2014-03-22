@@ -32,7 +32,7 @@ namespace Validation.Core
             }
 
             if (!pass)
-                throw new ValidationFailedException(target.Name, validationText, null, exception);
+                throw new ValidationFailedException(target.Name, validationText, exception);
 
             return target;
         }
@@ -61,7 +61,7 @@ namespace Validation.Core
             }
 
             if (!pass)
-                throw new ValidationFailedException(target.Name, validationText, null, exception);
+                throw new ValidationFailedException(target.Name, validationText, exception);
 
             return target;
         }

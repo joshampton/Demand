@@ -59,11 +59,6 @@ namespace Validation.Core
             return base.VisitMethodCall(node);
         }
 
-        protected override Expression VisitParameter(ParameterExpression node)
-        {
-            return base.VisitParameter(node);
-        }
-
         protected override Expression VisitConstant(ConstantExpression node)
         {
             if (!node.Type.Name.Contains("<>") && !this.arguments.Contains(node))
@@ -73,9 +68,6 @@ namespace Validation.Core
 
         protected override Expression VisitLambda<T>(Expression<T> node)
         {
-            if (node == null)
-                throw new ArgumentNullException("node");
-
             return base.Visit(node.Body);
         }
     }

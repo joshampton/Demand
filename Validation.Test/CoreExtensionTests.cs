@@ -195,5 +195,22 @@ namespace Validation.Test
                 throw;
             }
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void Visit_NullExpression()
+        {
+            Expression temp = null;
+
+            try
+            {
+                temp.Visit();
+            }
+            catch (ArgumentNullException e)
+            {
+                Assert.AreEqual("target", e.ParamName);
+                throw;
+            }
+        }
     }
 }
