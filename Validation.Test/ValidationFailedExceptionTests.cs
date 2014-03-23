@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
@@ -14,6 +15,49 @@ namespace Validation.Test
     [TestClass]
     public class ValidationFailedExceptionTests
     {
+        [TestMethod]
+        public void SerializationConstructor()
+        {
+            var input = new ValidationFailedException("targetNameValue", "validationValue");
+
+            var stream = new MemoryStream();
+            var formatter = new BinaryFormatter();
+
+            formatter.Serialize(stream, input);
+
+            stream.Seek(0, SeekOrigin.Begin);
+
+            var output = (ValidationFailedException)formatter.Deserialize(stream);
+
+            Assert.IsFalse(object.ReferenceEquals(input, output));
+            Assert.AreEqual(input.TargetName, output.TargetName);
+            Assert.AreEqual(input.Validation, output.Validation);
+        }
+
+        [TestMethod]
+        public void SerializationConstructor_InnerException()
+        {
+            var inner = new Exception("innerExceptionMessage");
+
+            var input = new ValidationFailedException("targetNameValue", "validationValue", inner);
+
+            var stream = new MemoryStream();
+            var formatter = new BinaryFormatter();
+
+            formatter.Serialize(stream, input);
+
+            stream.Seek(0, SeekOrigin.Begin);
+
+            var output = (ValidationFailedException)formatter.Deserialize(stream);
+
+            Assert.IsFalse(object.ReferenceEquals(input, output));
+            Assert.AreEqual(input.TargetName, output.TargetName);
+            Assert.AreEqual(input.Validation, output.Validation);
+            Assert.IsNotNull(output.InnerException);
+            Assert.IsFalse(object.ReferenceEquals(output.InnerException, inner));
+            Assert.AreEqual(inner.Message, output.InnerException.Message);
+        }
+
         [TestMethod]
         public void Constructor()
         {
