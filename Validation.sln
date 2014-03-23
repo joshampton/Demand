@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validation.Scratch", "Valid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validation.Test", "Validation.Test\Validation.Test.csproj", "{188E6A7D-65D0-4F61-A765-0E0C20DAFFA5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5F62B6C6-2A31-49B5-B4AC-AE65C91EAFE7}"
+	ProjectSection(SolutionItems) = preProject
+		Validation.runsettings = Validation.runsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
